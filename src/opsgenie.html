@@ -1,0 +1,55 @@
+<script type="text/javascript">
+    RED.nodes.registerType('OpsgenieCreateAlert', {
+        category: 'Opsgenie',
+        color: '#a6bbcf',
+        defaults: {
+            parameters: {value:"", type:"opsgenie-config"},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        icon:"alert.png",
+        label: function() {
+            return this.name||"Create Alert";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="OpsgenieCreateAlert">
+    <div class="form-row">
+        <label for="node-input-parameters"><i class="fa fa-plug"></i> Parameters</label>
+        <input type="text" id="node-input-parameters">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="OpsgenieCreateAlert">
+    <p>This node creates a new Opsgenie alert</p>
+    <h3>Inputs</h3>
+        <dl class="message-properties">
+            <dt>payload
+                <span class="property-type">object</span>
+            </dt>
+            <dd>the alert parameters.</dd>
+        </dl>
+    
+    <h3>Details</h3>
+        <p><code>msg.payload</code> is used to specify the alert creation parameters. It consists of a JSON object.</p>
+
+        <p>The object should contain the parameters as specified in the Opsgenie <a href="https://docs.opsgenie.com/docs/alert-api#section-create-alert">Create Alert API</a></p>
+
+        <p>As a minimum, a message parameter is required, for example:</p>
+<pre>"payload": {
+        "message": "Alert world!"
+    }</pre>
+
+        <p>If you wanted to specify an alias and a source as well:</p>
+<pre>"payload": {
+        "message": "Trouble ahoy!",
+        "alias": "54321",
+        "source": "nodered"
+    }</pre>
+</script>

@@ -10,6 +10,7 @@ class OG {
     sendQuery(endpoint, method, body) {
         return new Promise((resolve, reject) => {
             try {
+                var data = '';
                 const https = require('https');
                 var options = {
                     hostname: this.apihost,
@@ -20,9 +21,7 @@ class OG {
                         'Content-Type': 'application/json'
                     }
                 };
-                var data = '';
 
-                
                 // resolve(JSON.stringify(options));
 
                 const req = https.request(options, (res) => {
@@ -31,21 +30,42 @@ class OG {
                     });
 
                     res.on('end', () => {
-                        if (res.statusCode == 200) {
-                            resolve(JSON.parse(data));
+                        if ((res.statusCode >= 200) & (res.statusCode < 300)) {
+                            //Success
+                            var result = {
+                                success: true,
+                                body: JSON.parse(data)
+                            }
+                            resolve(result);
                         } else {
-                            reject({'StatusCode': res.statusCode, 'Message': res.statusMessage});
+                            //Failure
+                            var result = {
+                                success: false,
+                                body: JSON.parse(data),
+                                error: res.statusMessage
+                            }
+                            reject(result);
                         } 
                     });
 
                     res.on('error', (err) => {
-                        reject(err);
+                        var result = {
+                            success: false,
+                            body: JSON.parse(data),
+                            error: err.message
+                        }
+                        reject(result);
                     });
                 });
                 req.write(JSON.stringify(body));
                 req.end();
             } catch (error) {
-                reject(error);
+                var result = {
+                    success: false,
+                    body: JSON.parse(data),
+                    error: error.message
+                }
+                reject(result);
             }
         });
     }
@@ -64,6 +84,17 @@ class OG {
         var result = {};
         try {
             result = await this.sendQuery('alerts', 'POST', params);
+        } catch (error) {
+            result = error;
+        }
+        return result;
+    }
+
+    async closeAlert(identifier, identifierType, params={}) {
+        var result = {};
+        try {
+            var aQuery = 'alerts/' + identifier + '/close?identifierType=' + identifierType;
+            result = await this.sendQuery(aQuery, 'POST', params);
         } catch (error) {
             result = error;
         }

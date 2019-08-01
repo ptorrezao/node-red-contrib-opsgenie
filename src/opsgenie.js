@@ -23,15 +23,36 @@
 module.exports = function(RED) {
     var OG = require('./opsgenie_api.js');
 
-    function Opsgenie(config) {
+    function OpsgenieCreateAlert(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
         var og = new OG();
 
         node.on('input', function(msg) {
-
+            try {
+                if (msg.payload == undefined) {
+                    node.error("No payload defined!");
+                    break;
+                }
+    
+                if (msg.payload.message == undefined) {
+                    node.error("No message defined! A message is required to create an alert.");
+                    break;
+                }
+                
+                og.createAlert(msg.payload).then((aResult) => {
+                    if (aResult.success) {
+                        //Accepted
+                        node.log("An Opsgenie alert was created successfully with message: '" + msg.payload.message + "'");
+                    } else {
+                        node.log("There was a problem creating an Opsgenie alert: '" + aResult.error + "'");
+                    }
+                });
+            } catch (error) {
+                node.error("There was a problem creating an Opsgenie alert: '" + error.message + "'");    
+            }
         });
     }
-    RED.nodes.registerType("Opsgenie", Opsgenie);
+    RED.nodes.registerType("OpsgenieCreateAlert", OpsgenieCreateAlert);
 }

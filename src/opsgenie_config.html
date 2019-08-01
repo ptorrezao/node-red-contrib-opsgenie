@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    RED.nodes.registerType('opsgenie-config',{
+        category: 'config',
+        defaults: {
+            apihost: {value:"api.opsgenie.com",required:true},
+            version: {value:"v2",required:true},
+            apikey: {value:"",required:true}
+        },
+        label: function() {
+            return this.apikey+":"+this.apihost+":"+this.version;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="opsgenie-config">
+    <div class="form-row">
+        <label for="node-config-input-apihost"><i class="fa fa-server"></i> API Host</label>
+        <input type="text" id="node-config-input-apihost">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-version"><i class="fa fa-code-fork"></i> Version</label>
+        <input type="text" id="node-config-input-version">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-apikey"><i class="fa fa-key"></i> API Key</label>
+        <input type="text" id="node-config-input-apikey">
+    </div>
+</script>
