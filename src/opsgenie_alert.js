@@ -23,7 +23,7 @@
 module.exports = function(RED) {
     var OG = require('./opsgenie_api.js');
 
-    function OpsgenieCreateAlert(config) {
+    function OpsgenieAlert(config) {
         RED.nodes.createNode(this, config);
         var node = this;
 
@@ -54,5 +54,5 @@ module.exports = function(RED) {
             }
         });
     }
-    RED.nodes.registerType("OpsgenieCreateAlert", OpsgenieCreateAlert);
+    RED.nodes.registerType("OpsgenieAlert", OpsgenieAlert);
 }

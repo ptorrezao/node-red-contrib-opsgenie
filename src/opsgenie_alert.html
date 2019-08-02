@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('OpsgenieCreateAlert', {
+    RED.nodes.registerType('OpsgenieAlert', {
         category: 'Opsgenie',
         color: '#a6bbcf',
         defaults: {
@@ -10,12 +10,12 @@
         outputs:0,
         icon:"alert.png",
         label: function() {
-            return this.name||"Create Alert";
+            return this.name||"Opsgenie Alert";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="OpsgenieCreateAlert">
+<script type="text/x-red" data-template-name="OpsgenieAlert">
     <div class="form-row">
         <label for="node-input-parameters"><i class="fa fa-plug"></i> Parameters</label>
         <input type="text" id="node-input-parameters">
@@ -26,7 +26,7 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="OpsgenieCreateAlert">
+<script type="text/x-red" data-help-name="OpsgenieAlert">
     <p>This node creates a new Opsgenie alert</p>
     <h3>Inputs</h3>
         <dl class="message-properties">
