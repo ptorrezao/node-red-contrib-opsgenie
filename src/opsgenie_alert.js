@@ -27,26 +27,29 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-        var og = new OG();
+	node.params = RED.nodes.getNode(config.parameters);
+
+        var og = new OG(node.params.apikey);
 
         node.on('input', function(msg) {
             try {
                 if (msg.payload == undefined) {
                     node.error("No payload defined!");
-                    break;
+                    return;
                 }
     
                 if (msg.payload.message == undefined) {
                     node.error("No message defined! A message is required to create an alert.");
-                    break;
+                    return;
                 }
+		node.log("Opsgenie debug: " + JSON.stringify(msg.payload));
                 
                 og.createAlert(msg.payload).then((aResult) => {
                     if (aResult.success) {
                         //Accepted
                         node.log("An Opsgenie alert was created successfully with message: '" + msg.payload.message + "'");
                     } else {
-                        node.log("There was a problem creating an Opsgenie alert: '" + aResult.error + "'");
+                        node.error("There was a problem creating an Opsgenie alert: '" + aResult.error + "' - " + JSON.stringify(aResult.body));
                     }
                 });
             } catch (error) {

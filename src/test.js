@@ -22,9 +22,8 @@ var og = new OG('a7b571c4-294c-49d1-a326-ff4990115842');
 // });
 
 var dieparams = {
-    message: 'Toets!!',
-    alias: '123',
-    source: 'NodeRed'
+    "message": "Toets van Node Red Toets!",
+    "source": "Node Red"
 };
 og.createAlert(dieparams).then((dieresult) => {
     console.log(JSON.stringify(dieresult));
