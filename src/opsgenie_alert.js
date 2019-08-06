@@ -27,9 +27,9 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
-	node.params = RED.nodes.getNode(config.parameters);
+	    node.params = RED.nodes.getNode(config.parameters);
 
-        var og = new OG(node.params.apikey);
+        var og = new OG(node.params.apikey, node.params.version, node.params.apihost);
 
         node.on('input', function(msg) {
             try {
@@ -37,21 +37,52 @@ module.exports = function(RED) {
                     node.error("No payload defined!");
                     return;
                 }
-    
-                if (msg.payload.message == undefined) {
-                    node.error("No message defined! A message is required to create an alert.");
+
+                if (msg.action == undefined) {
+                    node.error("No action defined!");
                     return;
                 }
-		node.log("Opsgenie debug: " + JSON.stringify(msg.payload));
-                
-                og.createAlert(msg.payload).then((aResult) => {
-                    if (aResult.success) {
-                        //Accepted
-                        node.log("An Opsgenie alert was created successfully with message: '" + msg.payload.message + "'");
-                    } else {
-                        node.error("There was a problem creating an Opsgenie alert: '" + aResult.error + "' - " + JSON.stringify(aResult.body));
-                    }
-                });
+
+                switch (msg.action) {
+                    case 'create':
+                        if (msg.payload.message == undefined) {
+                            node.error("No message defined! A message is required to create an alert.");
+                            break;
+                        }
+                        og.createAlert(msg.payload).then((aResult) => {
+                            if (aResult.success) {
+                                //Accepted
+                                node.log("An Opsgenie alert was created successfully with message: '" + msg.payload.message + "'");
+                            } else {
+                                node.error("There was a problem creating an Opsgenie alert: '" + aResult.error + "' - " + JSON.stringify(aResult.body));
+                            }
+                        });
+                        break;
+                    case 'close':
+                        if (msg.identifier == undefined) {
+                            node.error("No identifier specified to close the Opsgenie alert with!");
+                            break;
+                        }
+                        if (msg.identifierType == undefined) {
+                            node.error("No identifier type specified for the identifier to close the Opsgenie alert with!");
+                            break;
+                        }
+                        if ((msg.identifierType != 'id') & (msg.identifierType != 'tiny') & (msg.identifierType != 'alias')) {
+                            node.error("No valid identifier type specified for the identifier to close the Opsgenie alert with!");
+                            break;
+                        }
+                        og.closeAlert(msg.identifier, msg.identifierType, msg.payload).then((aResult) => {
+                            if (aResult.success) {
+                                node.log("An Opsgenie alert will be closed: '" + JSON.stringify(aResult.body) + "'");
+                            } else {
+                                node.error("There was a problem closing the Opsgenie alert: '" + aResult.error + "' - " + JSON.stringify(aResult.body));
+                            }
+                        });
+                        break;
+                    default:
+                        node.error("No recognized action was defined, so nothing happened!");
+                        break;
+                }
             } catch (error) {
                 node.error("There was a problem creating an Opsgenie alert: '" + error.message + "'");    
             }
