@@ -1,12 +1,12 @@
 {
     "author": {
-        "name": "Edrean Ernst"
+        "name": "Edrean Ernst;Pedro Torrezão"
     },
     "bugs": {
         "url": "https://github.com/edreanernst/node-red-contrib-opsgenie/issues"
     },
     "name": "node-red-contrib-opsgenie",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Interface to Opsgenie API",
     "license": "MIT",
     "repository": {
@@ -25,7 +25,8 @@
     "node-red": {
         "nodes": {
             "OpsgenieAlert": "src/opsgenie_alert.js",
-            "opsgenie-config": "src/opsgenie_config.js"
+            "opsgenie-config": "src/opsgenie_config.js",
+            "OpsgenieAlerts": "src/opsgenie_alerts.js"
         }
     }
 }
