@@ -105,7 +105,7 @@ class OG {
     async getAlerts() {
         var result = {};
         try {
-            result = await this.sendQuery('alerts?query=status%3Aopen', 'GET', {});
+            result = await this.sendQuery('alerts', 'GET', {});
         } catch(error) {
             result = error;
         }

@@ -13,7 +13,6 @@ module.exports = function (RED) {
             msg.payload = node.params.apihost;
 
             try {
-
                 og.getAlerts().then((aResult) => {
                     if (aResult.success) {
                         aResult.body.data.forEach(element => {
