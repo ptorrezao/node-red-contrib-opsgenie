@@ -1,0 +1,33 @@
+<script type="text/javascript">
+    RED.nodes.registerType('OpsgenieAlerts',{
+        category: 'Opsgenie',
+        color: '#2684ff',
+        defaults: {
+            parameters: {type:"opsgenie-config", required:true},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        paletteLabel: "Opsgenie Alerts",
+        icon: "font-awesome/fa-bell",
+        label: function() {
+            return this.name||"Opsgenie Alerts";
+        }
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="OpsgenieAlerts">
+    <div class="form-row">
+        <label for="node-input-parameters"><i class="fa fa-plug"></i> Parameters</label>
+        <input type="text" id="node-input-parameters">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="OpsgenieAlerts">
+    <p>A node that retreives Opsgenie Alerts and turn them into messages (1 per alert)</p>
+</script>
