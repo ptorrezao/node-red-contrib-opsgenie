@@ -27,5 +27,5 @@ module.exports = function(RED) {
         this.version = n.version;
         this.apikey = n.apikey;
     }
-    RED.nodes.registerType("opsgenie-config",OpsgenieConfigNode);
+    RED.nodes.registerType("opsgenie-config", OpsgenieConfigNode);
 }
