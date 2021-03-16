@@ -26,7 +26,7 @@
         "nodes": {
             "OpsgenieAlert": "src/opsgenie_alert_action.js",
             "opsgenie-config": "src/opsgenie_config.js",
-            "OpsgenieAlerts": "src/opsgenie_alerts.js"
+            "OpsgenieAlertRead": "src/opsgenie_alert_read.js"
         }
     }
 }

@@ -28,6 +28,8 @@ Alternatively, submit an issue on the [GitHub project page](https://github.com/e
       - [msg.payload](#msgpayload)
       - [msg.identifier](#msgidentifier)
       - [msg.identifierType](#msgidentifiertype)
+    - [Read Action](#alert-reader)
+      - [msg.action](#readmsgaction)
   - [Examples](#examples)
     - [Create a simple alert](#create-a-simple-alert)
     - [Create an alert with an alias and source](#create-an-alert-with-an-alias-and-source)
@@ -35,6 +37,7 @@ Alternatively, submit an issue on the [GitHub project page](https://github.com/e
 
 ## Credits
 [![Edrean Ernst (Creator)](https://avatars.githubusercontent.com/u/8310460?s=88 "Edrean Ernst (Creator)")](https://github.com/edreanernst)
+[![Pedro Torrezão (Contributor)](https://avatars.githubusercontent.com/u/12836574?s=88 "Pedro Torrezão (Contributor)")](https://github.com/ptorrezao)
 
 ## Dependencies
 This node depends on the following libraries :
@@ -128,5 +131,94 @@ Please refer to the Opsgenie API documentation for descriptions of each of these
     "payload": {
         "note": "Node was here!"
     }
+}
+```
+---
+
+### Alert Reader
+
+This node will pull the existing alerts from your OpsGennie Setup according the configuration.
+
+#### Read msg.action
+This is a string field where an the type of question is can be specified (e.g. alerts)
+Possible values are:
+* "alerts"
+  * When trigered, this type will retreive the alerts from the [Alerts API Endpoint](https://docs.opsgenie.com/docs/alert-api#list-alerts) producing on message per alert.
+
+## Examples
+
+### Get current alerts
+```
+"msg": {
+    "action": "alerts"
+}
+```
+#### Example of an Msg produced per Alert
+```
+"msg": {
+  "event_type": "OpsGenie Alert",
+  "topic": "OpsGenie Alert",
+  "payload": element.message,
+  "data": 
+  {
+    "id": "70413a06-38d6-4c85-92b8-5ebc900d42e2",
+    "tinyId": "1791",
+    "alias": "event_573",
+    "message": "Our servers are in danger",
+    "status": "closed",
+    "acknowledged": false,
+    "isSeen": true,
+    "tags": [ "OverwriteQuietHours", "Critical" ],
+    "snoozed": true,
+    "snoozedUntil": "2017-04-03T20:32:35.143Z",
+    "count": 79,
+    "lastOccurredAt": "2017-04-03T20:05:50.894Z",
+    "createdAt": "2017-03-21T20:32:52.353Z",
+    "updatedAt": "2017-04-03T20:32:57.301Z",
+    "source": "Isengard",
+    "owner": "morpheus@opsgenie.com",
+    "priority": "P4",
+    "responders":[ 
+      { "id":"4513b7ea-3b91-438f-b7e4-e3e54af9147c", "type":"team" },
+      { "id":"bb4d9938-c3c2-455d-aaab-727aa701c0d8", "type":"user" },
+      { "id":"aee8a0de-c80f-4515-a232-501c0bc9d715", "type":"escalation" }, 
+      { "id":"80564037-1984-4f38-b98e-8a1f662df552", "type":"schedule" }
+    ],
+    "integration": { 
+        "id": "4513b7ea-3b91-438f-b7e4-e3e54af9147c",
+        "name": "Nebuchadnezzar",
+        "type": "API"
+    },
+    "report": {
+        "ackTime": 15702,
+        "closeTime": 60503,
+        "acknowledgedBy": "agent_smith@opsgenie.com",
+        "closedBy": "neo@opsgenie.com"
+    }
+  },
+  {
+    "id": "70413a06-38d6-4c85-92b8-5ebc900d42e2",
+    "tinyId": "1791",
+    "alias": "event_573",
+    "message": "Sample Message",
+    "status": "open",
+    "acknowledged": false,
+    "isSeen": false,
+    "tags": [ "RandomTag" ],
+    "snoozed": false,
+    "count": 1,
+    "lastOccurredAt": "2017-03-21T20:32:52.353Z",
+    "createdAt": "2017-03-21T20:32:52.353Z",
+    "updatedAt": "2017-04-03T20:32:57.301Z",
+    "source": "Zion",
+    "owner": "",
+    "priority": "P5",
+    "responders":[],
+    "integration": {
+        "id": "4513b7ea-3b91-b7e4-438f-e3e54af9147c",
+        "name": "My_Lovely_Amazon",
+        "type": "CloudWatch"
+    }
+  }
 }
 ```
