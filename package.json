@@ -24,7 +24,7 @@
     ],
     "node-red": {
         "nodes": {
-            "OpsgenieAlert": "src/opsgenie_alert.js",
+            "OpsgenieAlert": "src/opsgenie_alert_action.js",
             "opsgenie-config": "src/opsgenie_config.js",
             "OpsgenieAlerts": "src/opsgenie_alerts.js"
         }
