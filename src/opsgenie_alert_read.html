@@ -9,7 +9,8 @@
         inputs: 1,
         outputs: 1,
         paletteLabel: "Opsgenie Alert Read",
-        icon: "font-awesome/fa-bell",
+        icon: "alert.png",
+
         label: function () {
             return this.name || "Opsgenie Alert Read";
         }
@@ -23,38 +24,38 @@
         <input type="text" id="node-input-parameters">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
 
 <script type="text/x-red" data-help-name="OpsgenieAlertRead">        
-    <p>This node will pull the existing alerts from your OpsGennie Setup according the configuration.</p>
+    <p>This node will pull the existing alerts from your Opsgenie setup according the configuration.</p>
     <h3>Inputs</h3>
         <dl class="message-properties">
             <dt>action
                 <span class="property-type">string</span>
             </dt>
-            <dd>the alert action.</dd>
+            <dd>the read action.</dd>
         </dl>
     
     <h3>Details</h3>
         <p>
-            <code>msg.action</code> is used to indicate to the node what alert action that should be taken. It consists of a string of the following possible values:
+            <code>msg.action</code> is used to indicate to the node what alert action that should be executed. It consists of a string of the following possible values:
         </p>
         <ul>
-            <li>'alerts': when trigered, this type will retreive the alerts from the <a href="https://docs.opsgenie.com/docs/alert-api#list-alerts">Alerts API Endpoint</a> producing on message per alert.</li>
+            <li>'list': When triggered, this action will retrieve a list of the alerts from the <a href="https://docs.opsgenie.com/docs/alert-api#list-alerts">Alerts API Endpoint</a> producing one message per alert.</li>
         </ul>
 
         <p>
-            <h4>In order to trigger a new pulling action of the parameter is required, for example:</h4>
-
+            <h4>In order to trigger a new pulling action, of the parameter "action" is required:</h4>
         </p>
-        <pre>"action": "alerts"</pre>
+        <pre>"action": "list"</pre>
         <p>The Response will contain something similar to</p>
         <pre>"msg": {
-            "event_type": "OpsGenie Alert",
-            "topic": "OpsGenie Alert",
+            "event_type": "Opsgenie Alert",
+            "topic": "Opsgenie Alert",
             "payload": element.message,
             "data": 
             {

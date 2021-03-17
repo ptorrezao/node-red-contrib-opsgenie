@@ -15,7 +15,8 @@ module.exports = function (RED) {
                 node.params.apikey == undefined || 
                 node.params.version == undefined || 
                 node.params.apihost == undefined) {
-                node.error("No configurations defined!");
+                node.error("No configuration defined!");
+
                 return;
             }
 
@@ -25,25 +26,30 @@ module.exports = function (RED) {
             }
 
             switch (msg.action) {
-                case 'alerts':
+                case 'list':
+
                     try {
                         og.getAlerts().then((aResult) => {
                             if (aResult.success) {
                                 aResult.body.data.forEach(element => {
                                     node.send({
-                                        event_type: "OpsGenie Alert",
-                                        topic: "OpsGenie Alert",
+                                        event_type: "Opsgenie Alert",
+
+                                        topic: "Opsgenie Alert",
+
                                         payload: element.message,
                                         data: element
                                     });
                                 });
                             } else {
-                                node.error("There was a problem reading an Opsgenie alerts: '" + aResult.error + "' - " + JSON.stringify(aResult.body));
+                                node.error("There was a problem reading the Opsgenie alerts: '" + aResult.error + "' - " + JSON.stringify(aResult.body));
+
                             }
                         });
 
                     } catch (error) {
-                        node.error("There was a problem reading an Opsgenie alerts: '" + error.message + "'");
+                        node.error("There was a problem reading the Opsgenie alerts: '" + error.message + "'");
+
                     }
                     break;
                 default:

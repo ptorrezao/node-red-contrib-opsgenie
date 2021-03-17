@@ -1,12 +1,17 @@
 {
     "author": {
-        "name": "Edrean Ernst;Pedro Torrezão"
+        "name": "Edrean Ernst"
     },
+    "contributors": [
+        {
+            "name": "Pedro Torrezão"
+        }
+    ],
     "bugs": {
         "url": "https://github.com/edreanernst/node-red-contrib-opsgenie/issues"
     },
     "name": "node-red-contrib-opsgenie",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "description": "Interface to Opsgenie API",
     "license": "MIT",
     "repository": {

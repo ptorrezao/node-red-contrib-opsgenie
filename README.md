@@ -28,7 +28,7 @@ Alternatively, submit an issue on the [GitHub project page](https://github.com/e
       - [msg.payload](#msgpayload)
       - [msg.identifier](#msgidentifier)
       - [msg.identifierType](#msgidentifiertype)
-    - [Read Action](#alert-reader)
+    - [Alert Read](#alert-reader)
       - [msg.action](#readmsgaction)
   - [Examples](#examples)
     - [Create a simple alert](#create-a-simple-alert)
@@ -135,29 +135,29 @@ Please refer to the Opsgenie API documentation for descriptions of each of these
 ```
 ---
 
-### Alert Reader
+### Alert Read
 
-This node will pull the existing alerts from your OpsGennie Setup according the configuration.
+This node will pull the existing alerts from your Opsgenie setup according the configuration.
 
 #### Read msg.action
-This is a string field where an the type of question is can be specified (e.g. alerts)
+This is a string field where the type of action can be specified (e.g. list)
 Possible values are:
-* "alerts"
-  * When trigered, this type will retreive the alerts from the [Alerts API Endpoint](https://docs.opsgenie.com/docs/alert-api#list-alerts) producing on message per alert.
+* "list"
+  * When triggered, this action will retrieve a list of the alerts from the [Alerts API Endpoint](https://docs.opsgenie.com/docs/alert-api#list-alerts) producing one message per alert.
 
 ## Examples
 
 ### Get current alerts
 ```
 "msg": {
-    "action": "alerts"
+    "action": "list"
 }
 ```
-#### Example of an Msg produced per Alert
+#### Example of a message produced per alert
 ```
 "msg": {
-  "event_type": "OpsGenie Alert",
-  "topic": "OpsGenie Alert",
+  "event_type": "Opsgenie Alert",
+  "topic": "Opsgenie Alert",
   "payload": element.message,
   "data": 
   {
